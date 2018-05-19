@@ -66,7 +66,8 @@ ditch_the_axes <- theme(
   panel.border = element_blank(),
   panel.grid = element_blank(),
   axis.title = element_blank(),
-  plot.title =  element_text(size=30)
+  plot.title =  element_text(size=30),
+  legend.title = element_blank()
 )
 la_base +
   geom_polygon(data = la_county, fill = NA, color = "white") +
@@ -78,14 +79,17 @@ La$Blind <- as.numeric(La$Blind)
 La$Children <- as.numeric(gsub(",", "", as.character(La$Children)))
 La$Parents <- as.numeric(gsub(",", "", as.character(La$Parents)))
 La$Total_Enrollment <- as.numeric(gsub(",", "", as.character(La$Total_Enrollment )))
-#blind LA's
-Blind <- la_base +
+#LA's enrolled in medicaid
+Enroll <- la_base +
   geom_polygon(data = La, aes(fill =La$Total_Enrollment ), color = "white") +
   geom_polygon(color = "white", fill = NA) +
   scale_fill_gradient( name = "Number Enrolled") +
   ditch_the_axes+
-  labs(title="Louisiana Medicaid Enrollment by Parish", caption="http://ldh.la.gov/assets/medicaid/MedicaidEnrollmentReports/MedicaidbyParish/Medicaid_by_Parish3.2018.pdf")
-Blind
+  labs(title="Louisiana Medicaid Enrollment by Parish", caption="http://ldh.la.gov/assets/medicaid/MedicaidEnrollmentReports/MedicaidbyParish/Medicaid_by_Parish3.2018.pdf")+
+  scale_fill_gradientn(colours = rev(rainbow(7)),
+                       breaks = c(1000, 10000, 20000, 40000,80000),
+                       trans = "log10")
+Enroll
 
 
 sapply(La, class)
