@@ -66,7 +66,7 @@ ditch_the_axes <- theme(
   panel.border = element_blank(),
   panel.grid = element_blank(),
   axis.title = element_blank(),
-  plot.title =  element_text(size=40)
+  plot.title =  element_text(size=30)
 )
 la_base +
   geom_polygon(data = la_county, fill = NA, color = "white") +
@@ -77,14 +77,14 @@ la_base +
 La$Blind <- as.numeric(La$Blind)
 La$Children <- as.numeric(gsub(",", "", as.character(La$Children)))
 La$Parents <- as.numeric(gsub(",", "", as.character(La$Parents)))
-
+La$Total_Enrollment <- as.numeric(gsub(",", "", as.character(La$Total_Enrollment )))
 #blind LA's
 Blind <- la_base +
-  geom_polygon(data = La, aes(fill =La$Blind ), color = "white") +
+  geom_polygon(data = La, aes(fill =La$Total_Enrollment ), color = "white") +
   geom_polygon(color = "white", fill = NA) +
-  scale_fill_gradient( name = "Number of Blind") +
+  scale_fill_gradient( name = "Number Enrolled") +
   ditch_the_axes+
-  labs(title="Louisiana by Parish", caption="http://ldh.la.gov/assets/medicaid/MedicaidEnrollmentReports/MedicaidbyParish/Medicaid_by_Parish3.2018.pdf")
+  labs(title="Louisiana Medicaid Enrollment by Parish", caption="http://ldh.la.gov/assets/medicaid/MedicaidEnrollmentReports/MedicaidbyParish/Medicaid_by_Parish3.2018.pdf")
 Blind
 
 
